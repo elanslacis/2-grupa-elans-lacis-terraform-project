@@ -6,14 +6,14 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "public" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = ["10.0.1.0/24", "10.0.2.0/24"]
+  cidr_block = "10.0.1.0/24"
 
   tags = var.tags
 }
 
 resource "aws_subnet" "private" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = ["10.0.3.0/24", "10.0.4.0/24"]
+  cidr_block = "10.0.2.0/24"
 
   tags = var.tags
 }
@@ -41,10 +41,10 @@ resource "aws_nat_gateway" "nat" {
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
-  route = [{
+  route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
-  }]
+  }
 }
 
 resource "aws_route_table_association" "public" {
@@ -55,10 +55,10 @@ resource "aws_route_table_association" "public" {
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 
-  route = [{
+  route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.nat.id
-  }]
+  }
 }
 
 resource "aws_route_table_association" "private" {
@@ -72,8 +72,7 @@ resource "aws_security_group" "sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "HTTP"
-    cidr_blocks = "0.0.0.0/0"
-
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
@@ -81,8 +80,7 @@ resource "aws_security_group" "sg" {
     from_port   = 443
     to_port     = 443
     protocol    = "HTTPS"
-    cidr_blocks = "0.0.0.0/0"
-
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
@@ -90,7 +88,7 @@ resource "aws_security_group" "sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "SSH"
-    cidr_blocks = "62.85.31.62"
+    cidr_blocks = ["62.85.31.62/32"]
   }
 
   tags = var.tags
