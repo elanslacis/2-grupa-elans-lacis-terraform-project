@@ -66,30 +66,30 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private.id
 }
 
-resource "aws_security_group" "sg" {
-  ingress {
-    description = "HTTP"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "HTTP"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+# resource "aws_security_group" "sg" {
+#   ingress {
+#     description = "HTTP"
+#     from_port   = 80
+#     to_port     = 80
+#     protocol    = "HTTP"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
 
-  ingress {
-    description = "HTTPS"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "HTTPS"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+#   ingress {
+#     description = "HTTPS"
+#     from_port   = 443
+#     to_port     = 443
+#     protocol    = "HTTPS"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
 
-  ingress {
-    description = "SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "SSH"
-    cidr_blocks = ["62.85.31.62/32"]
-  }
+#   ingress {
+#     description = "SSH"
+#     from_port   = 22
+#     to_port     = 22
+#     protocol    = "SSH"
+#     cidr_blocks = ["62.85.31.62/32"]
+#   }
 
-  tags = var.tags
-}
+#   tags = var.tags
+# }
